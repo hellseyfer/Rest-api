@@ -13,7 +13,8 @@ app.set('port', process.env.PORT || 3000);
 // Middlewares (cada vez que llega una peticion, va a pasar por estas funciones)
 app.use(morgan('dev'));
 app.use(express.json());
-app.use(cors({origin: 'http://localhost:4200'}));
+// app.use(cors({origin: 'http://localhost:4200'}));
+app.use(cors());
 
 // Routes
 app.use('/api/products', require('./routes/product.routes'));
