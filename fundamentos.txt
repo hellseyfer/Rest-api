@@ -1,0 +1,9 @@
+npm i express // install server
+npm i nodemon -D // auto refresh server
+
+*añadir en parte "scripts"*
+	"dev": "nodemon server/index.js"
+npm run dev	// para iniciar el script
+npm i morgan	// para ver lo que el usuario esta pidiendo
+npm i mongoose	// modelar datos, conectarse a la db
+npm i cors
