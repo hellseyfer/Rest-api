@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/indexs.html');
 });
 
-io.origins(['*:*']);
+io.origins(['app-rest-ecom.web.app:*']);
 
 io.on('connection', (socket) => {
     console.log('a user connected');
@@ -52,11 +52,11 @@ app.use('/api/products', require('./routes/product.routes'));
 
 // Starting the server
 
-
+/*
 app.listen(PORT, () => {
     console.log("server on port 3000", app.get('port'));
 });
-
+*/
 /*
 http.listen(3000, () => {
     console.log('listening on *:3000');
