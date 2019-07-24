@@ -7,13 +7,6 @@ const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
-io.set('transports', ['websocket', 'xhr-polling', 'jsonp-polling', 'htmlfile', 'flashsocket']);
-io.set('origins', '*:*');
-io.of('/socket-server').on('connection', function (socket) {
-  // do something...
-});
-
-
 const {
     mongoose
 } = require('./database');
@@ -34,7 +27,8 @@ app.all('*', function(req, res, next) {
     next();
 });
 
-io.origins(cors());
+io.set('transports', ['websocket', 'xhr-polling', 'jsonp-polling', 'htmlfile', 'flashsocket']);
+io.origins();
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/indexs.html');
@@ -82,6 +76,8 @@ http.listen(3000, () => {
 });
 */
 
-io.listen(3000, () => {
+server.listen(server, () => {
 	console.log('Servidor corriendo en puerto: ', PORT);
 });
+
+const io = io.listen(server);
