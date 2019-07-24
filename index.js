@@ -3,8 +3,6 @@ const morgan = require('morgan');
 const cors = require('cors');
 const app = express();
 
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
 
 const {
     mongoose
@@ -23,10 +21,9 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/indexs.html');
 });
 
-io.configure(() => {
-    // io.set( 'origins', '*domain.com*:*' );
-    io.set( 'origins', '*:*' );
-});
+
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
 io.on('connection', (socket) => {
     console.log('a user connected');
