@@ -19,7 +19,6 @@ app.use(morgan('dev'));
 app.use(express.json());
 // app.use(cors({origin: 'http://localhost:4200'}));
 app.use(cors());
-io.origins('*:*');
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
@@ -34,6 +33,7 @@ const server = app.listen(app.get('port'), () => {
 ************************************************************************/
 const socketIo = require('socket.io');
 const io = socketIo(server);
+io.origins('*:*');
 
 io.on('connection', (socket) => {
     console.log('a user connected');
