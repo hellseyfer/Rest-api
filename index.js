@@ -2,12 +2,9 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 
-const socket = require('socket.io');
-const http = require('http');
 const app = express();
-
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 
 
 const {
@@ -27,6 +24,7 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/indexs.html');
 });
 
+io.origins(['*:*']);
 
 io.on('connection', (socket) => {
     console.log('a user connected');
@@ -55,9 +53,13 @@ app.use('/api/products', require('./routes/product.routes'));
 // Starting the server
 
 
-/*
-app.listen(app.get('port'), () => {
+app.listen(PORT, () => {
     console.log("server on port 3000", app.get('port'));
+});
+
+/*
+http.listen(3000, () => {
+    console.log('listening on *:3000');
 });
 */
 /*
@@ -66,6 +68,6 @@ http.listen(3000, () => {
 });
 */
 
-http.listen(3000, () => {
-    console.log('listening on *:3000');
+server.listen(PORT, () => {
+	console.log('Servidor corriendo en puerto: ', PORT);
 });
