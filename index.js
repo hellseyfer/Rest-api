@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(cors());
 io.origins('*:*');
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/indexs.html');
+    res.sendFile(__dirname + '/index.html');
 });
 
 /* Starting the server
