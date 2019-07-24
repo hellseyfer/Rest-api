@@ -2,7 +2,11 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const app = express();
-
+/*
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+*/
+var server = app.listen(3000);
 
 const {
     mongoose
@@ -21,9 +25,7 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/indexs.html');
 });
 
-
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var io = require('socket.io').listen(server);
 
 io.on('connection', (socket) => {
     console.log('a user connected');
@@ -57,7 +59,9 @@ app.listen(app.get('port'), () => {
     console.log("server on port 3000", app.get('port'));
 });
 */
-
+/*
 http.listen(3000, () => {
     console.log('listening on *:3000');
 });
+*/
+
