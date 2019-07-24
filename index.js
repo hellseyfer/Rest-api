@@ -1,33 +1,34 @@
+// const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-
-const PORT = 3000;
 let app = express();
-
+/*
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
+*/
+const socketIo = require('socket.io');
+const io = socketIo(server);
 
+const { mongoose } = require('./database');
 
-const {
-    mongoose
-} = require('./database');
+/* Settings
+************************************************************************/
+app.set('port', process.env.PORT || 3000);
 
-// Settings
-// app.set('port', process.env.PORT || 3000);
-
-// Middlewares (cada vez que llega una peticion, va a pasar por estas funciones)
+/* Middlewares (cada vez que llega una peticion, va a pasar por estas funciones)
+************************************************************************/
 app.use(morgan('dev'));
 app.use(express.json());
 // app.use(cors({origin: 'http://localhost:4200'}));
 app.use(cors());
-
 io.origins('*:*');
-
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/indexs.html');
 });
 
+/* Websockets
+************************************************************************/
 io.on('connection', (socket) => {
     console.log('a user connected');
     socket.on('disconnect', () => {
@@ -47,31 +48,12 @@ io.on('connection', (socket) => {
     })
 });
 
-
-
-// Routes
+/* Routes
+************************************************************************/
 app.use('/api/products', require('./routes/product.routes'));
 
-// Starting the server
-
-/*
-app.listen(PORT, () => {
-    console.log("server on port 3000", app.get('port'));
+/* Starting the server
+************************************************************************/
+const server = app.listen(app.get('port'), () => {
+    console.log("Listening server on port..", app.get('port'));
 });
-*/
-/*
-http.listen(3000, () => {
-    console.log('listening on *:3000');
-});
-*/
-/*
-http.listen(3000, () => {
-    console.log('listening on *:3000');
-});
-*/
-
-io.listen(3000, () => {
-	console.log('Servidor corriendo en puerto: ', 3000);
-});
-
-// io.listen(server);
