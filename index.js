@@ -7,6 +7,12 @@ const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
+io.set('transports', ['websocket', 'xhr-polling', 'jsonp-polling', 'htmlfile', 'flashsocket']);
+io.set('origins', '*:*');
+io.of('/socket-server').on('connection', function (socket) {
+  // do something...
+});
+
 
 const {
     mongoose
@@ -19,8 +25,30 @@ const {
 app.use(morgan('dev'));
 app.use(express.json());
 // app.use(cors({origin: 'http://localhost:4200'}));
-app.use(cors({origin: ':'}));
-io.origins(cors({origin: ':'}));
+app.use(cors());
+app.use(function (req, res, next) {
+    const origin = req.headers.origin
+    if (typeof origin === 'undefined') {
+      // No Cross Origin redirect
+      res.header('Access-Control-Allow-Origin', '*')
+    } else if (
+      (origin.indexOf('http://localhost')) === 0 ||
+      (origin.indexOf('http://172.16.') === 0) ||
+      (origin.indexOf('http://192.168.1.') === 0) ||
+      (origin.indexOf('http://admin.anguer.com') === 0) ||
+      (origin.indexOf('http://chat.anguer.com') === 0)
+    ) {
+      res.header('Access-Control-Allow-Origin', origin)
+      res.header('Access-Control-Allow-Credentials', 'true')
+    } else {
+      res.header('Access-Control-Allow-Origin', 'http://localhost')
+    }
+    res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Accept-Encoding, X-Access-Token')
+  
+    next()
+});
+
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/indexs.html');
@@ -68,6 +96,6 @@ http.listen(3000, () => {
 });
 */
 
-server.listen(PORT, () => {
+io.listen(PORT, () => {
 	console.log('Servidor corriendo en puerto: ', PORT);
 });
