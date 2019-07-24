@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 
+const PORT = 3000;
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
