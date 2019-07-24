@@ -3,7 +3,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 
 const PORT = 3000;
-const app = express();
+let app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
@@ -19,16 +19,9 @@ app.use(morgan('dev'));
 app.use(express.json());
 // app.use(cors({origin: 'http://localhost:4200'}));
 app.use(cors());
-app.all('*', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-    res.header("X-Powered-By",' 3.2.1');
-    next();
-});
 
 io.set('transports', ['websocket', 'xhr-polling', 'jsonp-polling', 'htmlfile', 'flashsocket']);
-io.origins();
+io.origins('*:*');
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/indexs.html');
