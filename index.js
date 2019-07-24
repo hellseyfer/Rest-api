@@ -11,7 +11,6 @@ const io = require('socket.io')(server);
 const io = require('socket.io')();
 app.io = io;
 
-
 const {
     mongoose
 } = require('./database');
@@ -25,7 +24,6 @@ app.use(express.json());
 // app.use(cors({origin: 'http://localhost:4200'}));
 app.use(cors());
 
-io.set('transports', ['websocket', 'xhr-polling', 'jsonp-polling', 'htmlfile', 'flashsocket']);
 io.origins('*:*');
 
 app.get('/', (req, res) => {
