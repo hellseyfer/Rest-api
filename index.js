@@ -26,8 +26,6 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/indexs.html');
 });
 
-¿
-
 io.on('connection', (socket) => {
     console.log('a user connected');
     socket.on('disconnect', () => {
