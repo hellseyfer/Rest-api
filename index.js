@@ -6,13 +6,9 @@ const socket = require('socket.io');
 const http = require('http');
 const app = express();
 
-const server = http.createServer(app);
-const io = socket.listen(server);
-
-/*
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-*/
+
 
 const {
     mongoose
@@ -70,6 +66,6 @@ http.listen(3000, () => {
 });
 */
 
-server.listen(3000, () => {
+http.listen(3000, () => {
     console.log('listening on *:3000');
 });
