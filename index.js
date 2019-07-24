@@ -4,13 +4,10 @@ const cors = require('cors');
 
 const PORT = 3000;
 let app = express();
-/*
+
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
-*/
-const http = require('http');
-const io = require('socket.io')();
-app.io = io;
+
 
 const {
     mongoose
@@ -72,9 +69,8 @@ http.listen(3000, () => {
     console.log('listening on *:3000');
 });
 */
-var server = http.Server(app);
 
-io.listen(server, () => {
+io.listen(PORT, () => {
 	console.log('Servidor corriendo en puerto: ', PORT);
 });
 
