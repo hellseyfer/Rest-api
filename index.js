@@ -6,7 +6,8 @@ const app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 */
-var server = app.listen(3000);
+var server = require('http').Server(app);
+var io = require('socket.io')(server, {origins:'*:*'});
 
 const {
     mongoose
@@ -19,13 +20,12 @@ const {
 app.use(morgan('dev'));
 app.use(express.json());
 // app.use(cors({origin: 'http://localhost:4200'}));
-app.use(cors());
+// app.use(cors());
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/indexs.html');
 });
 
-var io = require('socket.io').listen(server);
 
 io.on('connection', (socket) => {
     console.log('a user connected');
@@ -64,4 +64,8 @@ http.listen(3000, () => {
     console.log('listening on *:3000');
 });
 */
+
+server.listen(3000, () => {
+    console.log('server up and running...');
+})
 
