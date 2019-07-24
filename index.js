@@ -3,14 +3,11 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 let app = express();
+const { mongoose } = require('./database');
 /*
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 */
-const socketIo = require('socket.io');
-const io = socketIo(server);
-
-const { mongoose } = require('./database');
 
 /* Settings
 ************************************************************************/
@@ -27,8 +24,17 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/indexs.html');
 });
 
+/* Starting the server
+************************************************************************/
+const server = app.listen(app.get('port'), () => {
+    console.log("Listening server on port..", app.get('port'));
+});
+
 /* Websockets
 ************************************************************************/
+const socketIo = require('socket.io');
+const io = socketIo(server);
+
 io.on('connection', (socket) => {
     console.log('a user connected');
     socket.on('disconnect', () => {
@@ -52,8 +58,3 @@ io.on('connection', (socket) => {
 ************************************************************************/
 app.use('/api/products', require('./routes/product.routes'));
 
-/* Starting the server
-************************************************************************/
-const server = app.listen(app.get('port'), () => {
-    console.log("Listening server on port..", app.get('port'));
-});
