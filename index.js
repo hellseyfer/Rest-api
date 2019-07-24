@@ -70,8 +70,8 @@ http.listen(3000, () => {
 });
 */
 
-io.listen(PORT, () => {
-	console.log('Servidor corriendo en puerto: ', PORT);
+io.listen(3000, () => {
+	console.log('Servidor corriendo en puerto: ', 3000);
 });
 
 // io.listen(server);
