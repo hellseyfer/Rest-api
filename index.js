@@ -80,4 +80,4 @@ server.listen(PORT, () => {
 	console.log('Servidor corriendo en puerto: ', PORT);
 });
 
-const io = io.listen(server);
+io.listen(server);
