@@ -2,7 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 
-const PORT = 3000;
+// const PORT = 3000;
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
@@ -96,6 +96,6 @@ http.listen(3000, () => {
 });
 */
 
-io.listen(PORT, () => {
+io.listen(3000, () => {
 	console.log('Servidor corriendo en puerto: ', PORT);
 });
