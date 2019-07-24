@@ -6,8 +6,6 @@ const app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 */
-var server = require('http').Server(app);
-var io = require('socket.io')(server, {origins:'*:*'});
 
 const {
     mongoose
@@ -21,6 +19,15 @@ app.use(morgan('dev'));
 app.use(express.json());
 // app.use(cors({origin: 'http://localhost:4200'}));
 // app.use(cors());
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
+    next();
+});
+var server = http.createServer(app);
+io = socketio.listen(server, {log:false, origins:'*:*'});
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/indexs.html');
@@ -65,7 +72,4 @@ http.listen(3000, () => {
 });
 */
 
-server.listen(3000, () => {
-    console.log('server up and running...');
-})
 
