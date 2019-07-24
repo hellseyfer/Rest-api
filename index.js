@@ -26,29 +26,15 @@ app.use(morgan('dev'));
 app.use(express.json());
 // app.use(cors({origin: 'http://localhost:4200'}));
 app.use(cors());
-app.use(function (req, res, next) {
-    const origin = req.headers.origin
-    if (typeof origin === 'undefined') {
-      // No Cross Origin redirect
-      res.header('Access-Control-Allow-Origin', '*')
-    } else if (
-      (origin.indexOf('http://localhost')) === 0 ||
-      (origin.indexOf('http://172.16.') === 0) ||
-      (origin.indexOf('http://192.168.1.') === 0) ||
-      (origin.indexOf('http://admin.anguer.com') === 0) ||
-      (origin.indexOf('http://chat.anguer.com') === 0)
-    ) {
-      res.header('Access-Control-Allow-Origin', origin)
-      res.header('Access-Control-Allow-Credentials', 'true')
-    } else {
-      res.header('Access-Control-Allow-Origin', 'http://localhost')
-    }
-    res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Accept-Encoding, X-Access-Token')
-  
-    next()
+app.all('*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("X-Powered-By",' 3.2.1');
+    next();
 });
 
+io.origins(cors());
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/indexs.html');
