@@ -23,6 +23,7 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/indexs.html');
 });
 
+io.origins('*:*'); // for latest version
 io.on('connection', (socket) => {
     console.log('a user connected');
     socket.on('disconnect', () => {
