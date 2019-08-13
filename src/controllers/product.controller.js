@@ -1,0 +1,61 @@
+
+const Product = require('../models/product.model');
+
+const productCtrl = {};
+
+productCtrl.getProducts = async (req, res) => {
+    const products = await Product.find();
+    res.json(products);
+};
+
+productCtrl.getProduct = async (req, res) => {
+    const product = await Product.findById(req.params.id);
+    res.json(product);
+};
+
+
+productCtrl.createProduct = async (req, res) => {
+
+    const product = new Product({
+        title: req.body.title,
+        brand: req.body.brand,
+        price: req.body.price,
+        materials: req.body.materials,
+        images : req.body.images
+    });
+
+    product.save((err, productNew)=> {
+        if (err)
+                return res.status(500).send(err);
+        return res.json({
+            ok: true,
+            'status': 'Product saved',
+            product : productNew
+        });
+    });
+
+}
+
+
+productCtrl.editProduct = async (req, res) => {
+    const { id } = req.params;
+    const product ={
+        title: req.body.title,
+        brand: req.body.brand,
+        price: req.body.price,
+        materials: req.body.materials,
+        images : req.body.images
+    }
+    await Product.findByIdAndUpdate(id, {$set: product}, { new: true });
+    res.json({status: 'Product updated' });
+
+};
+
+productCtrl.deleteProduct = async (req, res) => {
+    await Product.findByIdAndDelete(req.params.id);
+    res.json({status: 'Product deleted'});
+};
+
+
+
+module.exports = productCtrl;
