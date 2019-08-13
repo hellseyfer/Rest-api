@@ -1,9 +1,6 @@
 /*
 const mongoose = require('mongoose');
 
-const URI = 'mongodb://localhost:27017/mean_crud';
-// const URI = 'mongodb+srv://hellseyfer:_Himjoinme669@cluster0-xigay.mongodb.net/test?retryWrites=true&w=majority';
-
 mongoose.connect(URI)
     .then(db => console.log('DB is connected'))
     .catch(err => console.error(err));
@@ -21,7 +18,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 //establish the connection with mongoose
-//const dbURI = 'mongodb://localhost:27017/mean_crud';
 mongoose.connect(`${process.env.MONGO_URI}`, {
     useNewUrlParser: true
 })
