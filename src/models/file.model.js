@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const fileSchema = new mongoose.Schema({
     doc_id: {
         type: String

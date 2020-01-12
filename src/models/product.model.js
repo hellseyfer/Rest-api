@@ -1,12 +1,37 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const variaSchema = require('../models/variation.model');
 
-const ProductSchema = new Schema({
+/* const Product = new Schema({
     title: { type: String, required: true },
     brand: { type: String, required: false },
     price: { type: Number, required: true },
     materials: { type: Array, required: false },
-    images: { type: Array, required: true }
+    variations: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Variation'
+    }],
+    gender: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Gender'
+    }],
+},  {
+    timestamps: true
+}); */
+const Product = new Schema({
+    title: { type: String, required: true },
+    brand: { type: String, required: true },
+    price: { type: Number, required: true },
+    materials: { type: Array, required: false },
+    varia: [ variaSchema.schema ],
+    gender: {  type: mongoose.Schema.Types.ObjectId, ref: 'Gender' },
+    colle: [{   type: mongoose.Schema.Types.ObjectId, ref: 'Collection' }],
+    description: { type: String, required: false },
+    status: { type: String, default: 'active' }
+},
+    {
+    timestamps: true
 });
 
-module.exports = mongoose.model('product', ProductSchema);
+
+module.exports = mongoose.model('Product', Product);
