@@ -13,8 +13,7 @@ if (process.env.NODE_ENV !== 'production') {
 require('dotenv').config();
 //establish the connection with mongoose
 //mongoose.connect(`${process.env.MONGO_URI}`, {
-
-mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0-xigay.mongodb.net/test?retryWrites=true&w=majority`, {
+mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@${process.env.MONGO_URI}/${process.env.MONGO_DB}?authSource=admin&retryWrites=true&w=majority`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     serverSelectionTimeoutMS: 5000
