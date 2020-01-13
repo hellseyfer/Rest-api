@@ -10,7 +10,7 @@ if (process.env.NODE_ENV !== 'development') {
     dotenv.config();
 }
 //asd
-require('dotenv').config();
+//require('dotenv').config();
 //establish the connection with mongoose
 //mongoose.connect(`${process.env.MONGO_URI}`, {
 

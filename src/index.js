@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const multer = require('multer');
 const { mongoose } = require('./database');
+const connectDB = require('./database');
 const funcUpload = require('./routes/upload2.routes');
 const bodyParser = require('body-parser');
 
@@ -23,11 +24,17 @@ let path = require('path');
 if (process.env.NODE_ENV !== 'development') {
     const dotenv = require('dotenv');
     dotenv.config();
+    app.use(express.static('client/build'));
     console.log('using env');
 }
 
+app.get('*', (request, response) => {
+    response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
+
 /* Settings
 ************************************************************************/
+connectDB();
 app.set('port', process.env.PORT || 3000);  // o bien toma el puerto que se le asigna o el 3000
 let storage = multer.diskStorage({
     destination: function (req, file, cb) {
