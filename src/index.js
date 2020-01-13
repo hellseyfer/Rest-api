@@ -16,6 +16,9 @@ require('dotenv').config();
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
+    app.get('*', (request, response) => {
+        response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    });
     console.log('using env');
 }
 
@@ -43,10 +46,6 @@ app.use(cors());
 // const upload = single('file');
 const upload = multer({ storage });
 
-
-app.get('*', (request, response) => {
-    response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
 
 /* Starting the server
 ************************************************************************/
