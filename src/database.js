@@ -10,10 +10,11 @@ if (process.env.NODE_ENV !== 'production') {
     dotenv.config();
 }
 
+require('dotenv').config();
 //establish the connection with mongoose
 //mongoose.connect(`${process.env.MONGO_URI}`, {
 
-mongoose.connect(`${process.env.MONGO_URIprod}`, {
+mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0-xigay.mongodb.net/test?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     serverSelectionTimeoutMS: 5000
