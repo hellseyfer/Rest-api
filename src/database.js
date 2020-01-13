@@ -21,7 +21,8 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 //establish the connection with mongoose
-mongoose.connect(`${process.env.MONGO_URI}`, {
+//mongoose.connect(`${process.env.MONGO_URI}`, {
+mongoose.connect(`${process.env.MONGO_URIprod}`, {
     useNewUrlParser: true
 })
     .then(db => console.log('DB is connected'))
