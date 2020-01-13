@@ -1,13 +1,3 @@
-/*
-const mongoose = require('mongoose');
-
-mongoose.connect(URI)
-    .then(db => console.log('DB is connected'))
-    .catch(err => console.error(err));
-
-module.exports = mongoose;
-*/
-
 //require the gridfs-easy and mongoose
 let mongoose = require('mongoose');
 // Make Mongoose use `findOneAndUpdate()`. Note that this option is `true`
@@ -22,8 +12,11 @@ if (process.env.NODE_ENV !== 'production') {
 
 //establish the connection with mongoose
 //mongoose.connect(`${process.env.MONGO_URI}`, {
+
 mongoose.connect(`${process.env.MONGO_URIprod}`, {
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 5000
 })
     .then(db => console.log('DB is connected'))
     .catch(err => console.error(err));

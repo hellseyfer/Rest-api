@@ -48,9 +48,9 @@ app.use(cors());
 // const upload = single('file');
 const upload = multer({ storage });
 
-app.get('/', (req, res) => {
+/* app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
-});
+}); */
 /* app.get('*', (req, res) => {
     res.render(__dirname +'/index.html', {
         title: 'Home'
