@@ -16,20 +16,10 @@ require('dotenv').config();
 
 
 
-/* mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0-xigay.mongodb.net/${process.env.MONGO_DB}?authSource=admin&retryWrites=true&w=majority`, {
+mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0-xigay.mongodb.net/${process.env.MONGO_DB}?authSource=admin&w=majority`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     serverSelectionTimeoutMS: 5000
 })
     .then(db => console.log('DB is connected'))
-    .catch(err => console.error(err)); */
-
-
-const MongoClient = require('mongodb').MongoClient;
-const client = new MongoClient(process.env.MONGO_URIprod, { useNewUrlParser: true });
-client.connect(err => {
-    const collection = client.db("test").collection("genders");
-    console.log('DB is connected');
-    // perform actions on the collection object
-    client.close();
-});
+    .catch(err => console.error(err));
