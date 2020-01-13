@@ -11,20 +11,16 @@ const bodyParser = require('body-parser');
 
 const productCtrl = require('./controllers/product.controller');
 const app = express();
-require('dotenv').config();
 
 /* Settings
 ************************************************************************/
 connectDB();
 app.set('port', process.env.PORT || 3000);  // o bien toma el puerto que se le asigna o el 3000
 
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('client/build'));
-/*     app.get('*', (request, response) => {
-        response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-    }); */
-    console.log('using env');
-}
+if (process.env.NODE_ENV !== 'production') {
+    const dotenv = require('dotenv')
+    dotenv.config({path: __dirname + '/.env'});
+  }
 
 let storage = multer.diskStorage({
     destination: function (req, file, cb) {

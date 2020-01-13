@@ -5,11 +5,14 @@ let mongoose = require('mongoose');
 mongoose.set('useFindAndModify', false);
 let gridfsEasy = require('gridfs-easy');
 
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+  }
+
 
 //establish the connection with mongoose
 const URI = 'mongodb+srv://'+process.env.MONGO_USER+ ':'+process.env.MONGO_PASS + '@cluster0-xigay.mongodb.net/'+process.env.MONGO_DB+'?retryWrites=true&w=majority';
-const URI2 = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0-xigay.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`
+//const URI2 = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0-xigay.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`
 console.log(URI);
 const connectDB = async () => {
     await mongoose.connect(URI || process.env.MONGO_DB, {
