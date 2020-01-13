@@ -9,7 +9,7 @@ if (process.env.NODE_ENV !== 'production') {
     const dotenv = require('dotenv');
     dotenv.config();
 }
-
+//asd
 require('dotenv').config();
 //establish the connection with mongoose
 //mongoose.connect(`${process.env.MONGO_URI}`, {
