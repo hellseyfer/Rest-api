@@ -23,6 +23,7 @@ let path = require('path');
 if (process.env.NODE_ENV !== 'development') {
     const dotenv = require('dotenv');
     dotenv.config();
+    console.log('using env');
 }
 
 /* Settings
