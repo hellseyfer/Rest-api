@@ -13,24 +13,23 @@ if (process.env.NODE_ENV !== 'production') {
 require('dotenv').config();
 //establish the connection with mongoose
 //mongoose.connect(`${process.env.MONGO_URI}`, {
-mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0-xigay.mongodb.net/${process.env.MONGO_DB}?authSource=admin&retryWrites=true&w=majority`, {
+
+
+
+/* mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0-xigay.mongodb.net/${process.env.MONGO_DB}?authSource=admin&retryWrites=true&w=majority`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     serverSelectionTimeoutMS: 5000
 })
     .then(db => console.log('DB is connected'))
-    .catch(err => console.error(err));
+    .catch(err => console.error(err)); */
 
-//export the gridfsEasy so that you can use it everywhere
-/*
-module.exports = new Promise(function (resolve, reject) {
 
-    //make sure you've successfully connected
-    mongoose.connection.on('connected', function () {
-
-        //initialize the gridfs-easy
-        let gfsEasy = new gridfsEasy(mongoose);
-        resolve(gfsEasy);
-    });
+const MongoClient = require('mongodb').MongoClient;
+const client = new MongoClient(process.env.MONGO_URIprod, { useNewUrlParser: true });
+client.connect(err => {
+    const collection = client.db("test").collection("genders");
+    console.log('DB is connected');
+    // perform actions on the collection object
+    client.close();
 });
-*/
