@@ -12,7 +12,7 @@ const URI = 'mongodb+srv://'+process.env.MONGO_USER+ ':'+process.env.MONGO_PASS 
 const URI2 = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0-xigay.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`
 console.log(URI);
 const connectDB = async () => {
-    await mongoose.connect(URI2 || process.env.MONGO_DB, {
+    await mongoose.connect(URI || process.env.MONGO_DB, {
         useUnifiedTopology: true,
         useNewUrlParser: true,
         serverSelectionTimeoutMS: 5000

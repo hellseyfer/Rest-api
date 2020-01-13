@@ -20,9 +20,9 @@ app.set('port', process.env.PORT || 3000);  // o bien toma el puerto que se le a
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
-    app.get('*', (request, response) => {
+/*     app.get('*', (request, response) => {
         response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-    });
+    }); */
     console.log('using env');
 }
 
