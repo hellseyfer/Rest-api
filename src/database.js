@@ -8,10 +8,11 @@ let gridfsEasy = require('gridfs-easy');
 require('dotenv').config();
 
 //establish the connection with mongoose
-const URI = "mongodb+srv://"+process.env.MONGO_USER+ ":"+process.env.MONGO_PASS + "@cluster0-xigay.mongodb.net/"+process.env.MONGO_DB+"?retryWrites=true&w=majority"
+const URI = 'mongodb+srv://'+process.env.MONGO_USER+ ':'+process.env.MONGO_PASS + '@cluster0-xigay.mongodb.net/'+process.env.MONGO_DB+'?retryWrites=true&w=majority';
+const URI2 = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0-xigay.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`
 console.log(URI);
 const connectDB = async () => {
-    await mongoose.connect(URI, {
+    await mongoose.connect(URI2 || process.env.MONGO_DB, {
         useUnifiedTopology: true,
         useNewUrlParser: true,
         serverSelectionTimeoutMS: 5000

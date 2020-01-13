@@ -9,10 +9,14 @@ const connectDB = require('./database');
 const funcUpload = require('./routes/upload2.routes');
 const bodyParser = require('body-parser');
 
-const Product = require('./models/product.model');
 const productCtrl = require('./controllers/product.controller');
 const app = express();
 require('dotenv').config();
+
+/* Settings
+************************************************************************/
+connectDB();
+app.set('port', process.env.PORT || 3000);  // o bien toma el puerto que se le asigna o el 3000
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
@@ -22,10 +26,6 @@ if (process.env.NODE_ENV === 'production') {
     console.log('using env');
 }
 
-/* Settings
-************************************************************************/
-connectDB();
-app.set('port', process.env.PORT || 3000);  // o bien toma el puerto que se le asigna o el 3000
 let storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, './src/public/uploads');
