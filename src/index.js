@@ -12,25 +12,12 @@ const bodyParser = require('body-parser');
 const Product = require('./models/product.model');
 const productCtrl = require('./controllers/product.controller');
 const app = express();
+require('dotenv').config();
 
-
-/*
-let multipart = require('connect-multiparty');
-let multipartMiddleware = multipart();
-let path = require('path');
-*/
-
-
-if (process.env.NODE_ENV !== 'development') {
-    const dotenv = require('dotenv');
-    dotenv.config();
+if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
     console.log('using env');
 }
-
-app.get('*', (request, response) => {
-    response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
 
 /* Settings
 ************************************************************************/
@@ -56,16 +43,10 @@ app.use(cors());
 // const upload = single('file');
 const upload = multer({ storage });
 
-/* app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
-}); */
-/* app.get('*', (req, res) => {
-    res.render(__dirname +'/index.html', {
-        title: 'Home'
-    });
-});  */
 
-//app.use(express.static(path.join(__dirname, 'public')));
+app.get('*', (request, response) => {
+    response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
 
 /* Starting the server
 ************************************************************************/
