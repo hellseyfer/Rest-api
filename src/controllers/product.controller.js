@@ -97,7 +97,10 @@ productCtrl.postProduct = async (req, res) => {
         materials: req.body.materials,
         gender: req.body.gender,
         colle: req.body.colle,
-        description: req.body.description
+        description: req.body.description,
+        weight: req.body.weight,
+        region: req.body.region,
+        inland_ship_cost: req.body.inland_ship_cost
     });
 
     await product.save();

@@ -27,7 +27,10 @@ const Product = new Schema({
     gender: {  type: mongoose.Schema.Types.ObjectId, ref: 'Gender' },
     colle: [{   type: mongoose.Schema.Types.ObjectId, ref: 'Collection' }],
     description: { type: String, required: false },
-    status: { type: String, default: 'active' }
+    status: { type: String, default: 'active' },
+    weight: { type: Number, required: true },
+    region: { type: String, required: true },
+    inland_ship_cost: { type: Number, required: false}
 },
     {
     timestamps: true

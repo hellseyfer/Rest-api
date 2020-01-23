@@ -40,7 +40,7 @@ collectionCtrl.postCollection = async (req, res, next) => {
             res.json({
                 'response': newColle
             });
-            res.send('collection received');
+            //res.send('collection received');
 
     } catch (err) {
         console.log(err);

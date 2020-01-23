@@ -15,7 +15,7 @@ cloudinary.config({
 })
 
 _router.post('/cloudy2', async (req, res, next) => {
-    // console.log(req);
+    console.log(req);
     const product = new Product({
         title: req.body.title,
         brand: req.body.brand,
@@ -23,7 +23,10 @@ _router.post('/cloudy2', async (req, res, next) => {
         materials: req.body.materials,
         gender: req.body.gender,
         colle: req.body.colle,
-        description: req.body.description
+        description: req.body.description,
+        weight: req.body.weight,
+        region: req.body.region,
+        inland_ship_cost: req.body.inland_ship_cost
     });
 
     await product.save();
