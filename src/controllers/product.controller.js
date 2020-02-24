@@ -99,8 +99,8 @@ productCtrl.postProduct = async (req, res) => {
         colle: req.body.colle,
         description: req.body.description,
         weight: req.body.weight,
-        region: req.body.region,
-        inland_ship_cost: req.body.inland_ship_cost
+        region: req.body.region
+        //inland_ship_cost: req.body.inland_ship_cost
     });
 
     await product.save();
@@ -212,6 +212,8 @@ productCtrl.editProduct = async (req, res) => {
         description: req.body.description,
         materials: req.body.materials,
         colle: req.body.colle,
+        weight: req.body.weight,
+        region: req.body.region
         //varia: req.body.varia
     };
     try {
@@ -219,11 +221,9 @@ productCtrl.editProduct = async (req, res) => {
             upsert: false // Make this update into an upsert
         });
 
-    } catch {
+    } catch(err) {
         console.log(err);
-        var error = {};
-        error.message = err;
-        error.status = 27017;
+        res.json({status: err});
     }
 
     let res_promises = req.body.varia.map((variacion, index) => new Promise(async (resolve, reject) => {
@@ -306,6 +306,8 @@ productCtrl.editProduct = async (req, res) => {
                         }
                     }
                 }) // end upload 
+            } else {
+                resolve();
             }
         })
         Promise.all(res_promises)
