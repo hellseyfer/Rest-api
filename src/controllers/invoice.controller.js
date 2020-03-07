@@ -10,7 +10,8 @@ invoiceCtrl.postInvoice = async (req, res, next) => {
         const newInvoice = new Invoice({
             items: req.body.items,
             total: req.body.total,
-            shippingInfo: req.body.shippingInfo
+            shippingInfo: req.body.shippingInfo,
+            carrier: req.body.carrier
         });
 
         await newInvoice.save();
