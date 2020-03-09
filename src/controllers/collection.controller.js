@@ -29,7 +29,7 @@ collectionCtrl.postCollection = async (req, res, next) => {
     const newColle = new Collection({
         description: req.body.description,
         gender: req.body.gender,
-        sizes: req.body.sizes,
+        //sizes: req.body.sizes,
         special: req.body.special,
         expiry: req.body.expiry
     });
@@ -55,7 +55,7 @@ collectionCtrl.editCollection = async(req, res, next) => {
     const filter = { _id: req.body._id };
     const update = {    description: req.body.description,
                         gender: req.body.gender,
-                        sizes: req.body.sizes,
+                        //sizes: req.body.sizes,
                         special: req.body.special,
                         expiry: req.body.expiry };
     try {

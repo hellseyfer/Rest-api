@@ -99,7 +99,8 @@ productCtrl.postProduct = async (req, res) => {
         colle: req.body.colle,
         description: req.body.description,
         weight: req.body.weight,
-        region: req.body.region
+        region: req.body.region,
+        tags: req.body.tags
         //inland_ship_cost: req.body.inland_ship_cost
     });
 
@@ -213,7 +214,8 @@ productCtrl.editProduct = async (req, res) => {
         materials: req.body.materials,
         colle: req.body.colle,
         weight: req.body.weight,
-        region: req.body.region
+        region: req.body.region,
+        tags: req.body.tags
         //varia: req.body.varia
     };
     try {
@@ -261,12 +263,13 @@ productCtrl.editProduct = async (req, res) => {
                 }
             })
         } else {
-            // add images to variation
+            
             variaID = variacion._id;
             console.log("vId: ", variacion._id);
         }
 
         await variacion.images.map(image => {
+            // upload only if image.url
             if (image.url) {
                 // console.log(image.url);
                 cloudinary.v2.uploader.upload(image.url, {
@@ -338,8 +341,31 @@ productCtrl.deleteProduct = async (req, res) => {
         res.json({ status: error });
         error
     }
-
 };
+
+productCtrl.deleteVaria = async (req, res) => {
+    try {
+        let filterProduct = { "_id": req.params.product_id }
+        await Product.updateOne(filterProduct,  { $pull: {varia: { _id: req.params.varia_id} } } );
+        res.json({ status: 'Varia deleted' });
+    } catch (err) {
+        console.log(err);
+        res.json({ status: error });
+        error
+    }
+}
+
+productCtrl.deletePhoto = async (req, res) => {
+    try {
+        let filter = { "_id": req.params.product_id, "varia._id": req.params.varia_id };
+        await Product.updateOne(filter,  { $pull: { "varia.$.images": { "public_id": req.params.image_public_id } } } );
+        res.json({ status: 'Photo deleted' });
+    } catch (err) {
+        console.log(err);
+        res.json({ status: error });
+        error
+    }
+}
 
 productCtrl.pauseProduct = async (req, res) => {
     /*   await Product.findByIdAndDelete(req.params.id);
