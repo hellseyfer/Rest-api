@@ -162,7 +162,7 @@ productCtrl.postProduct = async (req, res) => {
                             const image = new Image({
                                 title,
                                 description,
-                                imageURL: result.url,
+                                imageURL: result.secure_url,
                                 public_id: result.public_id
                             });
 
@@ -289,7 +289,7 @@ productCtrl.editProduct = async (req, res) => {
                             const image = new Image({
                                 title,
                                 description,
-                                imageURL: result.url,
+                                imageURL: result.secure_url,
                                 public_id: result.public_id
                             });
 
@@ -338,8 +338,7 @@ productCtrl.deleteProduct = async (req, res) => {
         res.json({ status: 'Product deleted' });
     } catch (err) {
         console.log(err);
-        res.json({ status: error });
-        error
+        res.json({ status: err });
     }
 };
 
@@ -350,8 +349,7 @@ productCtrl.deleteVaria = async (req, res) => {
         res.json({ status: 'Varia deleted' });
     } catch (err) {
         console.log(err);
-        res.json({ status: error });
-        error
+        res.json({ status: err});
     }
 }
 
@@ -362,8 +360,7 @@ productCtrl.deletePhoto = async (req, res) => {
         res.json({ status: 'Photo deleted' });
     } catch (err) {
         console.log(err);
-        res.json({ status: error });
-        error
+        res.json({ status: err});
     }
 }
 
@@ -378,8 +375,7 @@ productCtrl.pauseProduct = async (req, res) => {
         res.json({ status: 'Product paused' });
     } catch (err) {
         console.log(err);
-        res.json({ status: error });
-        error
+        res.json({ status: err });
     }
 
 };
