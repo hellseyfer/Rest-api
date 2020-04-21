@@ -8,8 +8,8 @@ const { mongoose } = require('./database');
 const connectDB = require('./database');
 const funcUpload = require('./routes/upload2.routes');
 const bodyParser = require('body-parser');
-const https = require("https"),
-    fs = require("fs");
+//const https = require("https"),
+    //fs = require("fs");
 const productCtrl = require('./controllers/product.controller');
 const app = express();
 
@@ -62,10 +62,6 @@ const upload = multer({ storage });
 
 /* Starting the server
 ************************************************************************/
-app.use((req, res) => {
-    res.writeHead(200);
-    res.end("hello world\n");
-});
 
 const server = app.listen(app.get('port'), () => {
     console.log("Listening server on port..", app.get('port'));
