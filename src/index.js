@@ -22,7 +22,7 @@ connectDB();
 if (process.env.NODE_ENV !== 'production') {
     const dotenv = require('dotenv')
     dotenv.config({path: __dirname + '/.env'});
-    app.set('port', process.env.PORT || 8080);
+    app.set('port', process.env.PORT || 8000);
   } else {
       //production mode in home server
     const options = {
