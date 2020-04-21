@@ -16,11 +16,23 @@ const app = express();
 /* Settings
 ************************************************************************/
 connectDB();
-app.set('port', process.env.PORT || 8000);
 
 if (process.env.NODE_ENV !== 'production') {
     const dotenv = require('dotenv')
     dotenv.config({ path: __dirname + '/.env' });
+    app.set('port', process.env.PORT || 8000);
+} else {
+    //production mode in home server
+    const options = {
+        key: fs.readFileSync('/etc/letsencrypt/live/' + process.env.CUSTOM_DNS + '/fullchain.pem'),
+        cert: fs.readFileSync('/etc/letsencrypt/live/' + process.env.CUSTOM_DNS + '/privkey.pem')
+    };
+    app.use((req, res) => {
+        res.writeHead(200);
+        res.end("hello world\n");
+    });
+    app.listen(8000);
+    https.createServer(options, app).listen(8080);
 }
 
 let storage = multer.diskStorage({
@@ -62,16 +74,10 @@ const upload = multer({ storage });
 
 /* Starting the server
 ************************************************************************/
-app.use((req, res) => {
-    res.writeHead(200);
-    res.end("hello world\n");
-});
-
 const server = app.listen(app.get('port'), () => {
     console.log("Listening server on port..", app.get('port'));
     console.log('Environment: ', process.env.NODE_ENV);
 });
-//https.createServer(options, app).listen(8080);
 
 /* Websockets
 ************************************************************************/
