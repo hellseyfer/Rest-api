@@ -8,18 +8,31 @@ const { mongoose } = require('./database');
 const connectDB = require('./database');
 const funcUpload = require('./routes/upload2.routes');
 const bodyParser = require('body-parser');
+const https = require("https"),
+    fs = require("fs");
 
 const productCtrl = require('./controllers/product.controller');
 const app = express();
 
 /* Settings
 ************************************************************************/
+
 connectDB();
-app.set('port', process.env.PORT || 8000);  // o bien toma el puerto que se le asigna o el 3000
 
 if (process.env.NODE_ENV !== 'production') {
     const dotenv = require('dotenv')
     dotenv.config({path: __dirname + '/.env'});
+    app.set('port', process.env.PORT || 8080);
+  } else {
+      //production mode in home server
+    const options = {
+        key: fs.readFileSync('/etc/letsencrypt/live/'+process.env.CUSTOM_DNS +'/fullchain.pem'),
+        cert: fs.readFileSync('/etc/letsencrypt/live/'+process.env.CUSTOM_DNS +'/privkey.pem')
+      };
+      https.createServer(options, function (req, res) {
+        res.writeHead(200);
+        res.end("hello world\n");
+      }).listen(8080);
   }
 
 let storage = multer.diskStorage({
