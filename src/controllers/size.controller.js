@@ -14,33 +14,17 @@ sizeCtrl.getSize = async (req, res) => {
 };
 
 sizeCtrl.postSizes = async (req, res, next) => {
+    console.log(req.body);
+    console.log(req.body.size);
     const newSizes = new Sizes({
         description: req.body.description,
     });
             await newSizes.save();
-            let res_promises = req.body.size.map(siz => new Promise(async (resolve, reject) => {
-                const newSize = new Size({
-                    description: siz.description
-                });
-
-                let filter = { "_id": newSizes._id }
-                let update = { $push: { "size": newSize } }
-                // insert variation on product
-                const res = await Sizes.updateOne(filter, update, { upsert: true, })
-                resolve(res._id); // need to Promise.all
-            }))
-
-            Promise.all(res_promises)
-            .then(async result => {
-                console.log('promise all');
-                res.json({
-                    'response': newSizes
-                });
-                res.send('sizes received');
-            })
-            .catch((error) => {
-                error
-            })    
+            // update size array
+        let filter = { "_id": newSizes._id }
+        let update2 = { $push: { "size": req.body.size } }         
+        const resp = await Sizes.updateOne(filter, update2, { upsert: true, });
+        res.json({ status: 'Sizes updated' }); 
 }
 
 sizeCtrl.editSizes = async(req, res, next) => {
@@ -53,37 +37,19 @@ sizeCtrl.editSizes = async(req, res, next) => {
           });
 
           doc.set('size', undefined, { strict: false }); // setting size array to null
-          console.log(doc);
+          console.log('after: ', doc);
           await doc.save(); // saving with size = null
 
         // update size array
-        let res_promises = req.body.size.map(siz => new Promise(async (resolve, reject) => {
-            const newSize = new Size({
-                description: siz.description
-            });
-            
-            let update2 = { $push: { "size": newSize } }         
-            const res = await Sizes.updateOne(filter, update2, { upsert: true, })
-            resolve(res._id); // need to Promise.all
-        }))
-        
-        Promise.all(res_promises)
-            .then(async result => {
-                console.log('promise all');
-                res.json({
-                    status: 'Sizes updated'
-                });
-                res.send('sizes received');
-            })
-            .catch((error) => {
-                error
-            })        
+        let update2 = { $push: { "size": req.body.size } }         
+        const resp = await Sizes.updateOne(filter, update2, { upsert: true, });
+        res.json({ status: 'Sizes updated' });
         //res.json({ status: 'Sizes updated' });
-    } catch {
+    } catch(err) {
         console.log(err);
         var error = {};
         error.message = err;
-        error.status = 27017;
+        res.json({ status: err });
     }   
 }
 
@@ -91,14 +57,12 @@ sizeCtrl.deleteSizes = async (req, res) => {
     try {
         await Sizes.findByIdAndDelete(req.params.id);
         res.json({ status: 'Sizes deleted' });
-    } catch {
+    } catch(err) {
         console.log(err);
         var error = {};
         error.message = err;
-        error.status = 27017;
-        //callback(error);
+        res.json({ status: err });
     }
 };
-
 
 module.exports = sizeCtrl;

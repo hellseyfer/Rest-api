@@ -122,26 +122,9 @@ productCtrl.postProduct = async (req, res) => {
         // end new variation
 
         // make sizes array
-        await variacion.sizes.map(async item => {
-            //console.log('item: ', item);
-            try {
-                const size = new Size({
-                    description: item.description,
-                    stock: item.stock
-                });
-                //sizeArr.push(size);
-                let filter = { "_id": product._id, "varia._id": newVariation._id };
-                let update = { $push: { "varia.$.sizes": size } };
-                const res = await Product.updateOne(filter, update, { upsert: true });
-                /* console.log('matched varia 1: ', res.n);
-                console.log('modified 1: ', res.n); */
-            } catch (err) {
-                var error = {};
-                error.message = err;
-                error.status = 27017;
-                console.log(err);
-            }
-        }),
+        let filter2 = { "_id": product._id, "varia._id": newVariation._id };
+        let update2 = { $push: { "varia.$.sizes": variacion.sizes } };
+        const resp = await Product.updateOne(filter2, update2, { upsert: true });
 
             // add images to variation
             await variacion.images.map(image => {
@@ -161,7 +144,7 @@ productCtrl.postProduct = async (req, res) => {
                             // create new image regist
                             const image = new Image({
                                 title,
-                                description,
+                                //description,
                                 imageURL: result.secure_url,
                                 public_id: result.public_id
                             });
@@ -239,33 +222,26 @@ productCtrl.editProduct = async (req, res) => {
             let filter = { "_id": productID }
             let update = { $push: { "varia": newVariation } }
             // insert variation on product
-            const res = await Product.updateOne(filter, update, { upsert: true, })
+            const doc = await Product.updateOne(filter, update, { upsert: true, })
+
 
             // make sizes array
-            await variacion.sizes.map(async item => {
-                //console.log('item: ', item);
-                try {
-                    const size = new Size({
-                        description: item.description,
-                        stock: item.stock
-                    });
+            let filter2 = { "_id": productID, "varia._id": newVariation._id };
+            let update2 = { $push: { "varia.$.sizes": variacion.sizes } };
+            const resp = await Product.updateOne(filter2, update2, { upsert: true });
 
-                    let filter = { "_id": productID, "varia._id": newVariation._id };
-                    let update = { $push: { "varia.$.sizes": size } };
-                    const res = await Product.updateOne(filter, update, { upsert: true });
-                    /* console.log('matched varia 1: ', res.n);
-                    console.log('modified 1: ', res.n); */
-                } catch (err) {
-                    var error = {};
-                    error.message = err;
-                    error.status = 27017;
-                    console.log(err);
-                }
-            })
         } else {
-            
             variaID = variacion._id;
             console.log("vId: ", variacion._id);
+
+            // setting size array to null
+            let filter = { "_id": productID, "varia._id": variaID };
+            let update = { $set: { "varia.$.sizes": []  }};
+            await Product.updateOne(filter, update, { upsert: true });
+
+             // remake sizes array
+             let update2 = { $push: { "varia.$.sizes": variacion.sizes } };
+             const resp = await Product.updateOne(filter, update2, { upsert: true });
         }
 
         await variacion.images.map(image => {
@@ -288,7 +264,7 @@ productCtrl.editProduct = async (req, res) => {
                             // create new image regist
                             const image = new Image({
                                 title,
-                                description,
+                                //description,
                                 imageURL: result.secure_url,
                                 public_id: result.public_id
                             });
@@ -296,9 +272,9 @@ productCtrl.editProduct = async (req, res) => {
                             //let filter = { _id: variation._id }
                             let filter = { "_id": productID, "varia._id": variaID };
                             let update = { $push: { "varia.$.images": image } };
-                            const res = await Product.updateOne(filter, update, { upsert: true });
-                            console.log('matched varia 2: ', res.n);
-                            console.log('modified 2: ', res.n);
+                            const resp = await Product.updateOne(filter, update, { upsert: true });
+                            console.log('matched varia 2: ', resp.n);
+                            console.log('modified 2: ', resp.n);
 
                         } catch (err) {
                             var error = {};

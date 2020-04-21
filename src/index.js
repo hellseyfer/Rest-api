@@ -15,7 +15,7 @@ const app = express();
 /* Settings
 ************************************************************************/
 connectDB();
-app.set('port', process.env.PORT || 3000);  // o bien toma el puerto que se le asigna o el 3000
+app.set('port', process.env.PORT || 8000);  // o bien toma el puerto que se le asigna o el 3000
 
 if (process.env.NODE_ENV !== 'production') {
     const dotenv = require('dotenv')
@@ -36,8 +36,24 @@ let storage = multer.diskStorage({
 app.use(bodyParser.json({ limit: '50mb', extended: true }));
 app.use(morgan('dev'));
 app.use(express.json());
-// app.use(cors({origin: 'http://localhost:4200'}));
-app.use(cors());
+// CORS config
+var originsWhitelist = [
+    'http://localhost:4200',      //this is my front-end url for development
+    'http://localhost:8080',
+    'https://korago.shop',  // my production domain url
+    'https://www.korago.shop'  // my production domain url
+  ];
+  var corsOptions = {
+    origin: function(origin, callback){
+          var isWhitelisted = originsWhitelist.indexOf(origin) !== -1;
+          callback(null, isWhitelisted);
+    },
+    credentials:true
+  }
+  //here is the magic
+app.use(cors(corsOptions));
+
+//app.use(cors());
 // const upload = app.use(multer({storage}).single('file'));
 // const upload = single('file');
 const upload = multer({ storage });
