@@ -10,30 +10,30 @@ const funcUpload = require('./routes/upload2.routes');
 const bodyParser = require('body-parser');
 const https = require("https"),
     fs = require("fs");
-
 const productCtrl = require('./controllers/product.controller');
 const app = express();
 
 /* Settings
 ************************************************************************/
-
 connectDB();
 
 if (process.env.NODE_ENV !== 'production') {
     const dotenv = require('dotenv')
-    dotenv.config({path: __dirname + '/.env'});
+    dotenv.config({ path: __dirname + '/.env' });
     app.set('port', process.env.PORT || 8000);
-  } else {
-      //production mode in home server
+} else {
+    //production mode in home server
     const options = {
-        key: fs.readFileSync('/etc/letsencrypt/live/'+process.env.CUSTOM_DNS +'/fullchain.pem'),
-        cert: fs.readFileSync('/etc/letsencrypt/live/'+process.env.CUSTOM_DNS +'/privkey.pem')
-      };
-      https.createServer(options, function (req, res) {
+        key: fs.readFileSync('/etc/letsencrypt/live/' + process.env.CUSTOM_DNS + '/fullchain.pem'),
+        cert: fs.readFileSync('/etc/letsencrypt/live/' + process.env.CUSTOM_DNS + '/privkey.pem')
+    };
+    app.use((req, res) => {
         res.writeHead(200);
         res.end("hello world\n");
-      }).listen(8080);
-  }
+    });
+    app.listen(8000);
+    https.createServer(options, app).listen(8080);
+}
 
 let storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -55,15 +55,15 @@ var originsWhitelist = [
     'http://localhost:8080',
     'https://korago.shop',  // my production domain url
     'https://www.korago.shop'  // my production domain url
-  ];
-  var corsOptions = {
-    origin: function(origin, callback){
-          var isWhitelisted = originsWhitelist.indexOf(origin) !== -1;
-          callback(null, isWhitelisted);
+];
+var corsOptions = {
+    origin: function (origin, callback) {
+        var isWhitelisted = originsWhitelist.indexOf(origin) !== -1;
+        callback(null, isWhitelisted);
     },
-    credentials:true
-  }
-  //here is the magic
+    credentials: true
+}
+//here is the magic
 app.use(cors(corsOptions));
 
 //app.use(cors());
