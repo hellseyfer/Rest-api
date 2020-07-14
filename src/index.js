@@ -4,12 +4,12 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const multer = require('multer');
-const { mongoose } = require('./database');
+//const { mongoose } = require('./database');
 const connectDB = require('./database');
 const funcUpload = require('./routes/upload2.routes');
 const bodyParser = require('body-parser');
-const https = require("https"),
-    fs = require("fs");
+/* const https = require("https"),
+    fs = require("fs"); */
 const productCtrl = require('./controllers/product.controller');
 const app = express();
 
