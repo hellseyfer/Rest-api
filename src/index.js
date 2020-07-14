@@ -16,7 +16,7 @@ const app = express();
 /* Settings
 ************************************************************************/
 connectDB();
-app.set('port', process.env.PORT || 8080);
+app.set('port', process.env.PORT || 5050);
 
 if (process.env.NODE_ENV !== 'production') {
     const dotenv = require('dotenv')
@@ -54,8 +54,8 @@ var corsOptions = {
     credentials: true
 }
 //here is the magic
-//app.use(cors(corsOptions));
-app.use(cors());
+app.use(cors(corsOptions));
+
 
 //app.use(cors());
 // const upload = app.use(multer({storage}).single('file'));
