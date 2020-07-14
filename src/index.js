@@ -54,7 +54,8 @@ var corsOptions = {
     credentials: true
 }
 //here is the magic
-app.use(cors(corsOptions));
+//app.use(cors(corsOptions));
+app.use(cors());
 
 //app.use(cors());
 // const upload = app.use(multer({storage}).single('file'));
