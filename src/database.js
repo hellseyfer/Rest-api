@@ -3,7 +3,7 @@ let mongoose = require('mongoose');
 // Make Mongoose use `findOneAndUpdate()`. Note that this option is `true`
 // by default, you need to set it to false.
 mongoose.set('useFindAndModify', false);
-let gridfsEasy = require('gridfs-easy');
+//let gridfsEasy = require('gridfs-easy');
 
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
