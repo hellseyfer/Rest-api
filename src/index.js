@@ -43,7 +43,8 @@ var originsWhitelist = [
     'http://localhost:8080',
     'https://korago.shop',  // my production domain url
     'https://www.korago.shop',  // my production domain url
-    'https://ipgeolocation.com/'
+    'https://ipgeolocation.com/',
+    'https://app-ecom.herokuapp.com'
 ];
 var corsOptions = {
     origin: function (origin, callback) {
