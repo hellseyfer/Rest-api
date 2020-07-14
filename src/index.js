@@ -8,15 +8,15 @@ const { mongoose } = require('./database');
 const connectDB = require('./database');
 const funcUpload = require('./routes/upload2.routes');
 const bodyParser = require('body-parser');
-//const https = require("https"),
-    //fs = require("fs");
+const https = require("https"),
+    fs = require("fs");
 const productCtrl = require('./controllers/product.controller');
 const app = express();
 
 /* Settings
 ************************************************************************/
 connectDB();
-app.set('port', process.env.PORT || 8000);
+app.set('port', process.env.PORT || 8080);
 
 if (process.env.NODE_ENV !== 'production') {
     const dotenv = require('dotenv')
@@ -42,7 +42,8 @@ var originsWhitelist = [
     'http://localhost:4200',      //this is my front-end url for development
     'http://localhost:8080',
     'https://korago.shop',  // my production domain url
-    'https://www.korago.shop'  // my production domain url
+    'https://www.korago.shop',  // my production domain url
+    'https://ipgeolocation.com/'
 ];
 var corsOptions = {
     origin: function (origin, callback) {
@@ -63,9 +64,12 @@ const upload = multer({ storage });
 /* Starting the server
 ************************************************************************/
 
+
 const server = app.listen(app.get('port'), () => {
     console.log("Listening server on port..", app.get('port'));
     console.log('Environment: ', process.env.NODE_ENV);
+	// Here we send the ready signal to PM2
+	//process.send('ready');
 });
 //https.createServer(options, app).listen(8080);
 
