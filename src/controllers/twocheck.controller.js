@@ -22,7 +22,8 @@ twocheckCtrl.getNotifications = async (req, res) => {
 twocheckCtrl.postInvoice = async (req, res) => {
     if (tco.notification.valid(req.body)) {
         //response.send("Valid");
-        let body = req.body;
+        
+        let body = req;
         console.log("REQ: ", body);
     
         const TwoCheckInvoiceData = new TwoCheckInvoice(body);
