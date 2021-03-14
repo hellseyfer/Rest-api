@@ -39,6 +39,7 @@ twocheckCtrl.postInvoice = async (req, res) => {
             res.json({ status: err });
         }
     } else {
+        console.log("invalid");
         res.send("Invalid");
     }
 
@@ -62,6 +63,7 @@ twocheckCtrl.postOrder = async (req, res) => {
             res.json({ status: err });
         }
     } else {
+        console.log("invalid");
         res.send("Invalid");
     }
 
