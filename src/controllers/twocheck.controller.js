@@ -8,11 +8,23 @@ twocheckCtrl.getNotifications = async (req, res) => {
 };
 
 twocheckCtrl.postInvoice = async (req, res) => {
-    console.log(req.body);
-    const newInvoice = new Object(req.body);
+
+        /*                            
+    save without schema mongoose
+    Ex:
+    var thingSchema = new Schema({..}, { strict: false });
+    var Thing = mongoose.model('Thing', thingSchema);
+    var thing = new Thing({ iAmNotInTheSchema: true });
+    thing.save() // iAmNotInTheSchema is now saved to the db!!
+    */
+
+    var TwoCheckInvoiceSchema = new Schema({}, { strict: false });
+    var TestCollection = mongoose.model('TwoCheckInvoices', TwoCheckInvoiceSchema);
+    let body = req.body
+    const testCollectionData = new TestCollection(body)
 
     try {
-        await newInvoice.save();
+        await testCollectionData.save()
         console.log('promise all');
             res.json({
                 'response': newInvoice
@@ -28,11 +40,13 @@ twocheckCtrl.postInvoice = async (req, res) => {
 };
 
 twocheckCtrl.postOrder = async (req, res) => {
-    console.log(req.body);
-    const newOrder = new Object(req.body);
 
+    var TwoCheckOrderSchema = new Schema({}, { strict: false });
+    var TestCollection = mongoose.model('TwoCheckOrders', TwoCheckOrderSchema);
+    let body = req.body
+    const testCollectionData = new TestCollection(body)
     try {
-        await newOrder.save();
+        await testCollectionData.save()
         console.log('promise all');
             res.json({
                 'response': newOrder
