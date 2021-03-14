@@ -10,7 +10,7 @@ twocheckCtrl.getNotifications = async (req, res) => {
 };
 
 twocheckCtrl.postInvoice = async (req, res) => {
-    let body = req;
+    let body = req.body;
     console.log("REQ: ", body);
 
     const TwoCheckInvoiceData = new TwoCheckInvoice(body);
@@ -33,7 +33,7 @@ twocheckCtrl.postInvoice = async (req, res) => {
 
 twocheckCtrl.postOrder = async (req, res) => {
 
-    let body = req;
+    let body = req.body;
     console.log("REQ: ", body);
 
     const TwoCheckOrderData = new TwoCheckOrder(body);
