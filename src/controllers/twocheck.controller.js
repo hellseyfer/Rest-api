@@ -20,7 +20,7 @@ twocheckCtrl.getNotifications = async (req, res) => {
 };
 
 twocheckCtrl.postInvoice = async (req, res) => {
-    let body = req.body;
+    let body = req;
     console.log("REQ: ", body);
     console.log(req.bill_city);
 
@@ -48,7 +48,7 @@ twocheckCtrl.postInvoice = async (req, res) => {
 
 twocheckCtrl.postOrder = async (req, res) => {
     let body = req.body;
-    console.log("REQ: ", body);
+    console.log("REQ body : ", body);
 
     if (tco.notification.valid(body)) {
         //response.send("Valid");
