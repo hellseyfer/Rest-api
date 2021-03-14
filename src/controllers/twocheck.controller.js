@@ -22,7 +22,7 @@ twocheckCtrl.postInvoice = async (req, res) => {
 
     var TwoCheckInvoiceSchema = new Schema({}, { strict: false });
     var TestCollection = mongoose.model('TwoCheckInvoices', TwoCheckInvoiceSchema);
-    let body = req.params
+    let body = req;
     console.log("REQ: ", body);
 
     const testCollectionData = new TestCollection(body)
@@ -47,7 +47,7 @@ twocheckCtrl.postOrder = async (req, res) => {
 
     var TwoCheckOrderSchema = new Schema({}, { strict: false });
     var TestCollection = mongoose.model('TwoCheckOrders', TwoCheckOrderSchema);
-    let body = req.params
+    let body = req;
     console.log("REQ: ", body);
 
     const testCollectionData = new TestCollection(body);
