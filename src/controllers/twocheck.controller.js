@@ -1,4 +1,6 @@
 /* const TwoCheck = require('../models/twocheck.model'); */
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
 const twocheckCtrl = {};
 
