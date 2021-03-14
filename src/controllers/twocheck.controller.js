@@ -17,17 +17,13 @@ twocheckCtrl.postInvoice = async (req, res) => {
 
     try {
         await TwoCheckInvoiceData.save()
-        console.log('promise all');
-            res.json({
-                'response': TwoCheckInvoiceData
-            });
-            res.send('invoice received');
+        res.json({ status: 'invoice received' });
 
     } catch (err) {
         console.log(err);
         var error = {};
         error.message = err;
-        error.status = 27017;
+        res.json({ status: err });
     }
 };
 
@@ -39,17 +35,13 @@ twocheckCtrl.postOrder = async (req, res) => {
     const TwoCheckOrderData = new TwoCheckOrder(body);
     try {
         await TwoCheckOrderData.save();
-        console.log('promise all');
-            res.json({
-                'response': TwoCheckOrderData
-            });
-            res.send('Order received');
+        res.json({ status: 'order received' });
 
     } catch (err) {
         console.log(err);
         var error = {};
         error.message = err;
-        error.status = 27017;
+        res.json({ status: err });
     }
 };
 
