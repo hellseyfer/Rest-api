@@ -1,6 +1,6 @@
 /* const TwoCheck = require('../models/twocheck.model'); */
-const mongoose = require('mongoose');
-const { Schema } = mongoose;
+const TwoCheckInvoice = require('../models/twocheck_invoice.model');
+const TwoCheckOrder = require('../models/twocheck_order.model');
 
 const twocheckCtrl = {};
 
@@ -10,28 +10,16 @@ twocheckCtrl.getNotifications = async (req, res) => {
 };
 
 twocheckCtrl.postInvoice = async (req, res) => {
-
-        /*                            
-    save without schema mongoose
-    Ex:
-    var thingSchema = new Schema({..}, { strict: false });
-    var Thing = mongoose.model('Thing', thingSchema);
-    var thing = new Thing({ iAmNotInTheSchema: true });
-    thing.save() // iAmNotInTheSchema is now saved to the db!!
-    */
-
-    var TwoCheckInvoiceSchema = new Schema({}, { strict: false });
-    var TestCollection = mongoose.model('TwoCheckInvoices', TwoCheckInvoiceSchema);
     let body = req;
     console.log("REQ: ", body);
 
-    const testCollectionData = new TestCollection(body)
+    const TwoCheckInvoiceData = new TwoCheckInvoice(body);
 
     try {
-        await testCollectionData.save()
+        await TwoCheckInvoiceData.save()
         console.log('promise all');
             res.json({
-                'response': testCollectionData
+                'response': TwoCheckInvoiceData
             });
             res.send('invoice received');
 
@@ -45,17 +33,15 @@ twocheckCtrl.postInvoice = async (req, res) => {
 
 twocheckCtrl.postOrder = async (req, res) => {
 
-    var TwoCheckOrderSchema = new Schema({}, { strict: false });
-    var TestCollection = mongoose.model('TwoCheckOrders', TwoCheckOrderSchema);
     let body = req;
     console.log("REQ: ", body);
 
-    const testCollectionData = new TestCollection(body);
+    const TwoCheckOrderData = new TwoCheckOrder(body);
     try {
-        await testCollectionData.save();
+        await TwoCheckOrderData.save();
         console.log('promise all');
             res.json({
-                'response': testCollectionData
+                'response': TwoCheckOrderData
             });
             res.send('Order received');
 
