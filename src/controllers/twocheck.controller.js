@@ -2,8 +2,6 @@
 const TwoCheckInvoice = require('../models/twocheck_invoice.model');
 const TwoCheckOrder = require('../models/twocheck_order.model');
 const Twocheckout = require('2checkout-node');
-var assert = require("assert"),
-    tco2 = require("../twocheckout/spec_helper");
 
 // Pass in your private key and seller ID
 var tco = new Twocheckout({
@@ -23,10 +21,13 @@ twocheckCtrl.getNotifications = async (req, res) => {
 
 twocheckCtrl.postInvoice = async (req, res) => {
     let body = tco.notification;
-    console.log("REQ: ", body);
-    if (tco.notification.valid(req.body)) {
+    
+    if (tco2.notification.valid(req.body)) {
+        console.log("valid");
+        console.log(tco.notification.options.notification);
         res.send("Valid");
     } else {
+        console.log("invalid");
         res.send("Invalid");
     }
 
@@ -56,7 +57,7 @@ twocheckCtrl.postOrder = async (req, res) => {
     let body = req.body;
     console.log("REQ body : ", body);
 
-    if (tco.notification.valid(body)) {
+    if (tco2.notification.valid(body)) {
         //response.send("Valid");
     
         const TwoCheckOrderData = new TwoCheckOrder(body);
