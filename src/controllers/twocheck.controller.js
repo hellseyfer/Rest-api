@@ -3,7 +3,7 @@ const TwoCheckInvoice = require('../models/twocheck_invoice.model');
 const TwoCheckOrder = require('../models/twocheck_order.model');
 const Twocheckout = require('2checkout-node');
 var assert = require("assert"),
-    tco2 = require("./twocheckout/spec_helper");
+    tco2 = require("../twocheckout/spec_helper");
 
 // Pass in your private key and seller ID
 var tco = new Twocheckout({

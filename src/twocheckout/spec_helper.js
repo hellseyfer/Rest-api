@@ -1,4 +1,5 @@
-var Twocheckout = require("../lib/2checkout.js");
+//var Twocheckout = require("../lib/2checkout.js");
+const Twocheckout = require('2checkout-node');
 
 var tco = module.exports = new Twocheckout({
     apiUser: "api_username",
