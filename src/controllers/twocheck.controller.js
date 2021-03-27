@@ -20,11 +20,9 @@ twocheckCtrl.getNotifications = async (req, res) => {
 };
 
 twocheckCtrl.postInvoice = async (req, res) => {
-    let body = tco.notification;
-    
     if (tco.notification.valid(req.body)) {
         console.log("valid");
-        console.log(tco.notification.options.notification);
+        console.log("1 ", tco.notification.options.notification);
         res.send("Valid");
     } else {
         console.log("invalid");
@@ -54,10 +52,10 @@ twocheckCtrl.postInvoice = async (req, res) => {
 };
 
 twocheckCtrl.postOrder = async (req, res) => {
-    let body = req.body;
+/*     let body = req.body;
     console.log("REQ body : ", body);
 
-    if (tco2.notification.valid(body)) {
+    if (tco.notification.valid(body)) {
         //response.send("Valid");
     
         const TwoCheckOrderData = new TwoCheckOrder(body);
@@ -74,7 +72,7 @@ twocheckCtrl.postOrder = async (req, res) => {
     } else {
         console.log("invalid");
         res.send("Invalid");
-    }
+    } */
 
 };
 
