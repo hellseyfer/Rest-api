@@ -18,12 +18,11 @@ const twocheckCtrl = {};
 
 twocheckCtrl.getIPNNotifications = async (req, res) => {
     console.log(req.body);
-    res.json({ status: 200 }).send("OK");
+    res.json({ status: 200, message: "OK" })
 };
 
 twocheckCtrl.postIPNNotifications = async (req, res) => {
-    console.log(req.body);
-    console.log(req.params);
+    console.log(req);
     let hashString = '';
     let valueLengthInBytes;
 
