@@ -10,7 +10,8 @@ var tco = new Twocheckout({
     sellerId: process.env.TWOCHECK_SELLER_ID,                                    // Seller ID, required for all non Admin API bindings 
     privateKey: process.env.TWOCHECK_PRIVATE_KEY,     // Payment API private key, required for checkout.authorize binding
     secretWord: process.env.TWOCHECK_SECRET_WORD,  // Secret Word, required for response and notification checks
-    sandbox: true
+    sandbox: true,
+    secreKey: process.env.TWOCHECK_SECRET_KEY
 });
 
 const twocheckCtrl = {};
@@ -22,6 +23,7 @@ twocheckCtrl.getIPNNotifications = async (req, res) => {
 
 twocheckCtrl.postIPNNotifications = async (req, res) => {
     console.log(req.body);
+    console.log(req.params);
     let hashString = '';
     let valueLengthInBytes;
 
