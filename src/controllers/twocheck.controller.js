@@ -9,7 +9,8 @@ var tco = new Twocheckout({
     apiPass: process.env.TWOCHECK_API_PASS,                              // Admin API Password, required for Admin API bindings
     sellerId: process.env.TWOCHECK_SELLER_ID,                                    // Seller ID, required for all non Admin API bindings 
     privateKey: process.env.TWOCHECK_PRIVATE_KEY,     // Payment API private key, required for checkout.authorize binding
-    secretWord: process.env.TWOCHECK_SECRET_WORD  // Secret Word, required for response and notification checks
+    secretWord: process.env.TWOCHECK_SECRET_WORD,  // Secret Word, required for response and notification checks
+    sandbox: true
 });
 
 const twocheckCtrl = {};
@@ -20,6 +21,8 @@ twocheckCtrl.getNotifications = async (req, res) => {
 };
 
 twocheckCtrl.postInvoice = async (req, res) => {
+    console.log("REQ: ", req.body);
+    console.log("TCO: ", tco.notification);
     if (tco.notification.valid(req.body)) {
         console.log("valid");
         console.log("1 ", tco.notification.options.notification);
