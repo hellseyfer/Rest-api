@@ -22,7 +22,7 @@ twocheckCtrl.getNotifications = async (req, res) => {
 
 twocheckCtrl.postInvoice = async (req, res) => {
     console.log("REQ: ", req.body);
-    console.log("TCO: ", tco.notification);
+    console.log("TCO: ", tco.notification.options.notification);
     if (tco.notification.valid(req.body)) {
         console.log("valid");
         console.log("1 ", tco.notification.options.notification);
