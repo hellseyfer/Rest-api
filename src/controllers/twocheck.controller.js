@@ -15,9 +15,24 @@ var tco = new Twocheckout({
 
 const twocheckCtrl = {};
 
-twocheckCtrl.getNotifications = async (req, res) => {
-    const notifications = res
-    res.json(notifications);
+twocheckCtrl.getIPNNotifications = async (req, res) => {
+    console.log(req.body);
+    res.json({ status: 200 }).send("OK");
+};
+
+twocheckCtrl.postIPNNotifications = async (req, res) => {
+    console.log(req.body);
+    let hashString = '';
+    let valueLengthInBytes;
+
+    Object.keys(req.params).forEach(function(key) {
+    valueLengthInBytes = byteLength(req.params[key].toString());
+    if (valueLengthInBytes > 0) {
+        hashString += valueLengthInBytes + req.params[key].toString();
+    }
+    });
+    console.log("HASHSTRING: ", hashString);
+    return hashString
 };
 
 twocheckCtrl.postInvoice = async (req, res) => {
@@ -79,5 +94,16 @@ twocheckCtrl.postOrder = async (req, res) => {
     } */
 
 };
+
+function byteLength(str) {      //mudar a helper
+    let s = str.length;
+    for (let i = str.length-1; i>=0; i--) {
+    var code = str.charCodeAt(i);
+    if (code > 0x7f && code <= 0x7ff) s++;
+    else if (code > 0x7ff && code <= 0xffff) s+=2;
+    if (code >= 0xDC00 && code <= 0xDFFF) i--;
+    }
+    return s;
+}
 
 module.exports = twocheckCtrl;
