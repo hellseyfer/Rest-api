@@ -126,3 +126,4 @@ app.use('/seller', require('./routes/seller.routes'));
 app.use('/invoice', require('./routes/invoice.routes'));
 app.use('/address', require('./routes/address.routes'));
 app.use('/ordstatus', require('./routes/ordstatus.routes'));
+app.use('/twocheck', require('./routes/twocheck.routes'));
