@@ -44,7 +44,9 @@ var originsWhitelist = [
     'https://korago.shop',  // my production domain url
     'https://www.korago.shop',  // my production domain url
     'https://ipgeolocation.com/',
-    'https://app-ecom.herokuapp.com'
+    'https://app-ecom.herokuapp.com',
+    'https://hellseyfer-rest-api.glitch.me',
+    'https://app-rest-ecom.web.app/'
 ];
 var corsOptions = {
     origin: function (origin, callback) {
